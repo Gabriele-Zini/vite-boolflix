@@ -39,6 +39,7 @@ export default {
       this.store.loading = true
       axios.get(`${this.store.apiUrl}search/tv`, { params }).then((resp) => {
         this.store.seriesList = resp.data.results
+       
       }).finally(() => {
         this.store.loading = false
       })
@@ -47,8 +48,7 @@ export default {
       console.log(store.searchQuery)
       this.getMovieList()
       this.getSeriesList()
-      console.log(this.store.seriesList)
-      console.log(this.store.movieList)
+      
     }
   }
 }

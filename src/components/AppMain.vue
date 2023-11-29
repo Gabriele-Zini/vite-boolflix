@@ -6,6 +6,7 @@ export default {
     data() {
         return {
             store,
+            
         }
     },
     components: {
@@ -20,7 +21,7 @@ export default {
         <div class="container mt-5">
             <h2>movies</h2>
             <div class="d-flex flex-wrap row">
-                <div class="card col-4" v-for="movie in store.movieList" :key="movie.id">
+                <div class="card col-4 " v-for="movie in store.movieList" :key="movie.id">
                     <AppCardMovie :movie="movie" />
                 </div>
             </div>

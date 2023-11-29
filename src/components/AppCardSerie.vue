@@ -10,17 +10,23 @@ export default {
     },
     props: {
         serie: Object,
-    }
+    }, 
+    methods: {
+        formatRating() {
+            let rating = Math.floor(this.serie.vote_average / 2)
+            return rating
+        }
+    },
 }
 </script>
 
 <template>
     <div>
         <ul class="list-unstyled">
-            <li>{{ serie.name }}</li>
-            <li>{{ serie.original_name }}</li>
-            <li>{{ serie.original_language }}</li>
-            <li>{{ serie.vote_average}}</li>
+            <li>title: {{ serie.name }}</li>
+            <li>original title: {{ serie.original_name }}</li>
+            <li>original language: {{ serie.original_language }}</li>
+            <li> rating: {{ formatRating() }}</li>
         </ul>
     </div>
 </template>
