@@ -7,4 +7,5 @@ export const store = reactive({
   apiUrl: "https://api.themoviedb.org/3/",
   apiKey: "7c99d77d8acb8db9c5ee5504f2096b13",
   searchQuery: "",
+  flags: ['en', 'es', 'fr', 'it', 'sv', 'ja', 'zh', 'sr', 'tr', 'pt', 'cn', 'ko', 'dk', 'gr', 'pl', 'de', ],
 });
