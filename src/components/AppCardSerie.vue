@@ -13,7 +13,7 @@ export default {
     },
     methods: {
         formatRating() {
-            let rating = Math.floor(this.serie.vote_average / 2)
+            let rating = Math.ceil(this.serie.vote_average / 2)
             return rating
         },
         getImage() {

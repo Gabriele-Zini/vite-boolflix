@@ -14,7 +14,7 @@ export default {
     },
     methods: {
         formatRating() {
-            let rating = Math.floor(this.movie.vote_average / 2)
+            let rating = Math.ceil(this.movie.vote_average / 2)
             return rating
         },
         getImage() {
@@ -38,6 +38,7 @@ export default {
             </li>
             <li v-else>original language: {{ movie.original_language }}</li>
             <li>rating: {{ formatRating() }}</li>
+            <li> <img :src="`https://image.tmdb.org/t/p/w342/${movie.poster_path}`" alt=""></li>
         </ul>
     </div>
 </template>
