@@ -22,7 +22,7 @@ export default {
     getMovieList() {
       const params = {
         api_key: this.store.apiKey,
-        query: "Ciao",
+        query: this.store.searchQuery,
       }
       this.store.loading = true
       console.log(this.store.loading)
@@ -37,7 +37,7 @@ export default {
     getSeriesList() {
       const params = {
         api_key: this.store.apiKey,
-        query: "Ciao",
+        query: this.store.searchQuery,
       }
       this.store.loading = true
       console.log(this.store.loading)
@@ -48,13 +48,20 @@ export default {
         this.store.loading = false
         console.log(this.store.loading)
       })
+    },
+    searchElms() {
+      console.log(store.searchQuery)
+      this.getMovieList()
+      this.getSeriesList()
+      console.log(this.store.seriesList)
+      console.log(this.store.movieList)
     }
   }
 }
 </script>
 
 <template>
-  <AppHeader />
+  <AppHeader @send-query="searchElms" />
   <AppMain />
 </template>
 
