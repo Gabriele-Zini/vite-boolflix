@@ -35,6 +35,7 @@ export default {
             </li>
             <li v-else>original language: {{ serie.original_language }}</li>
             <li> rating: {{ formatRating() }}</li>
+            <li> <img :src="`https://image.tmdb.org/t/p/w342/${serie.poster_path}`" alt=""></li>
         </ul>
     </div>
 </template>
