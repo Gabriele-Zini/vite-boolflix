@@ -19,15 +19,15 @@ export default {
 <template>
     <div>
         <div class="container mt-5">
-            <h2 class="text-white text-uppercase">movies</h2>
+            <h2 class="text-white text-uppercase text-center">movies</h2>
             <div class="d-flex flex-wrap row">
-                <div class=" col-4 " v-for="movie in store.movieList" :key="movie.id">
+                <div class=" col-3 " v-for="movie in store.movieList" :key="movie.id">
                     <AppCardMovie :movie="movie" />
                 </div>
             </div>
-            <h2 class="text-white text-uppercase">series</h2>
+            <h2 class="text-white text-uppercase ms_title text-center">series</h2>
             <div class="flex-wrap d-flex row">
-                <div class=" col-4" v-for="serie in store.seriesList" :key="serie.id">
+                <div class=" col-3" v-for="serie in store.seriesList" :key="serie.id">
                     <AppCardSerie :serie="serie" />
                 </div>
             </div>
@@ -36,4 +36,8 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+
+.ms_title {
+    margin-top: 60px;
+}
 </style>
