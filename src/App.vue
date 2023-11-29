@@ -26,7 +26,6 @@ export default {
       }
       this.store.loading = true
       axios.get(`${this.store.apiUrl}search/movie`, { params }).then((resp) => {
-        console.log(resp.data.results)
         this.store.movieList = resp.data.results
       }).finally(() => {
         this.store.loading = false
