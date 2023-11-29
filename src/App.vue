@@ -25,13 +25,10 @@ export default {
         query: this.store.searchQuery,
       }
       this.store.loading = true
-      console.log(this.store.loading)
       axios.get(`${this.store.apiUrl}/search/movie`, { params }).then((resp) => {
         this.store.movieList.push(resp.data.results)
-        console.log(this.store.movieList)
       }).finally(() => {
         this.store.loading = false
-        console.log(this.store.loading)
       })
     },
     getSeriesList() {
@@ -40,13 +37,10 @@ export default {
         query: this.store.searchQuery,
       }
       this.store.loading = true
-      console.log(this.store.loading)
       axios.get(`${this.store.apiUrl}/search/tv`, { params }).then((resp) => {
         this.store.seriesList.push(resp.data.results)
-        console.log(this.store.seriesList)
       }).finally(() => {
         this.store.loading = false
-        console.log(this.store.loading)
       })
     },
     searchElms() {
