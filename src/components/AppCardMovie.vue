@@ -35,12 +35,12 @@ export default {
             :style="{ backgroundImage: `url('https://image.tmdb.org/t/p/w342/${movie.poster_path}')` }">
         </div>
         <ul class="list-unstyled  py-5 px-4" :class="{ 'd-block': !movie.poster_path }">
-            <li>title: {{ movie.title }}</li>
-            <li>original title: {{ movie.original_title }}</li>
-            <li v-if="getImage()"> original language: <img :src="getImage()">
+            <li><span class="fw-bold me-2"> Title:</span> {{ movie.title }}</li>
+            <li v-if="movie.original_title!== movie.title"><span class="fw-bold me-2">Original title:</span>{{ movie.original_title }}</li>
+            <li v-if="getImage()"> <span class="fw-bold me-2">Original language:</span> <img :src="getImage()">
             </li>
-            <li v-else>original language: {{ movie.original_language }}</li>
-            <li> rating: {{ formatRating() }}</li>
+            <li v-else><span class="fw-bold me-2">Original language:</span>{{ movie.original_language }}</li>
+            <li> <span class="fw-bold me-2">Rating:</span> {{ formatRating() }}</li>
         </ul>
     </div>
 </template>

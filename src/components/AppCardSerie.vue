@@ -29,12 +29,12 @@ export default {
             :style="{ backgroundImage: `url('https://image.tmdb.org/t/p/w342/${serie.poster_path}')` }">
         </div>
         <ul class="list-unstyled  py-5 px-4" :class="{ 'd-block': !serie.poster_path }">
-            <li>title: {{ serie.name }}</li>
-            <li>original title: {{ serie.original_name }}</li>
-            <li v-if="getImage()"> original language: <img :src="getImage()">
+            <li><span class="fw-bold me-2">Title:</span> {{ serie.name }}</li>
+            <li v-if="serie.original_name !== serie.name"><span class="fw-bold me-2">Original title:</span> {{ serie.original_name }}</li>
+            <li v-if="getImage()"> <span class="fw-bold me-2">Original language:</span> <img :src="getImage()">
             </li>
-            <li v-else>original language: {{ serie.original_language }}</li>
-            <li> rating: {{ formatRating() }}</li>
+            <li v-else><span class="fw-bold">Original language:</span> {{ serie.original_language }}</li>
+            <li> <span class="fw-bold me-2">Rating:</span>{{ formatRating() }}</li>
         </ul>
     </div>
 </template>
