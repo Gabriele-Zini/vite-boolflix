@@ -6,7 +6,7 @@ export default {
     data() {
         return {
             store,
-            
+
         }
     },
     components: {
@@ -27,7 +27,7 @@ export default {
             </div>
             <h2>series</h2>
             <div class="flex-wrap d-flex row">
-                <div class="card col-4" v-for="serie in store.seriesList" :key="serie.id">
+                <div class=" col-4" v-for="serie in store.seriesList" :key="serie.id">
                     <AppCardSerie :serie="serie" />
                 </div>
             </div>
@@ -35,4 +35,5 @@ export default {
     </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+</style>

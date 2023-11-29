@@ -4,8 +4,6 @@ export default {
     data() {
         return {
             store,
-
-
         }
     },
     props: {
@@ -20,24 +18,59 @@ export default {
             if (this.store.flags.includes(this.serie.original_language)) {
                 return new URL(`../assets/flags/${this.serie.original_language}.png`, import.meta.url).href;
             }
-        }
-
+        },
     },
 }
 </script>
 
 <template>
-    <div>
-        <ul class="list-unstyled">
+    <div class="ms_hover">
+        <div v-if="serie.poster_path" class="ms_image list-unstyled"
+            :style="{ backgroundImage: `url('https://image.tmdb.org/t/p/w342/${serie.poster_path}')` }">
+        </div>
+        <ul class="list-unstyled  py-5 px-4" :class="{ 'd-block': !serie.poster_path }">
             <li>title: {{ serie.name }}</li>
             <li>original title: {{ serie.original_name }}</li>
             <li v-if="getImage()"> original language: <img :src="getImage()">
             </li>
             <li v-else>original language: {{ serie.original_language }}</li>
             <li> rating: {{ formatRating() }}</li>
-            <li> <img :src="`https://image.tmdb.org/t/p/w342/${serie.poster_path}`" alt=""></li>
         </ul>
     </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@use '../style/partials/_mixin.scss' as*;
+@use '../style/partials/variables';
+
+.ms_hover {
+    .ms_image {
+        height: 400px;
+        width: 300px;
+        background-size: cover;
+        border: 2px solid white;
+
+
+
+    }
+
+    ul {
+        display: none;
+        height: 400px;
+        width: 300px;
+        background-color: black;
+        color: white;
+        border: 2px solid white;
+    }
+
+    &:hover {
+        ul {
+            display:block
+        }
+        .ms_image {
+            display: none;
+        }
+    }
+
+}
+</style>

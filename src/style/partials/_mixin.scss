@@ -1,0 +1,8 @@
+@mixin dynamicBackground() {
+    background-repeat: no-repeat;
+    min-height: 400px;
+
+    &:hover {
+        opacity: 0;
+      }
+  }
