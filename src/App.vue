@@ -25,8 +25,9 @@ export default {
         query: this.store.searchQuery,
       }
       this.store.loading = true
-      axios.get(`${this.store.apiUrl}/search/movie`, { params }).then((resp) => {
-        this.store.movieList.push(resp.data.results)
+      axios.get(`${this.store.apiUrl}search/movie`, { params }).then((resp) => {
+        console.log(resp.data.results)
+        this.store.movieList = resp.data.results
       }).finally(() => {
         this.store.loading = false
       })
@@ -37,8 +38,8 @@ export default {
         query: this.store.searchQuery,
       }
       this.store.loading = true
-      axios.get(`${this.store.apiUrl}/search/tv`, { params }).then((resp) => {
-        this.store.seriesList.push(resp.data.results)
+      axios.get(`${this.store.apiUrl}search/tv`, { params }).then((resp) => {
+        this.store.seriesList = resp.data.results
       }).finally(() => {
         this.store.loading = false
       })
