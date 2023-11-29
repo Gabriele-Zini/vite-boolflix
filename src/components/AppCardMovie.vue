@@ -5,7 +5,7 @@ export default {
     data() {
         return {
             store,
-           
+
         }
     },
 
@@ -30,17 +30,54 @@ export default {
 </script>
 
 <template>
-    <div>
-        <ul class="list-unstyled">
+    <div class="ms_hover">
+        <div v-if="movie.poster_path" class="ms_image list-unstyled"
+            :style="{ backgroundImage: `url('https://image.tmdb.org/t/p/w342/${movie.poster_path}')` }">
+        </div>
+        <ul class="list-unstyled  py-5 px-4" :class="{ 'd-block': !movie.poster_path }">
             <li>title: {{ movie.title }}</li>
             <li>original title: {{ movie.original_title }}</li>
             <li v-if="getImage()"> original language: <img :src="getImage()">
             </li>
             <li v-else>original language: {{ movie.original_language }}</li>
-            <li>rating: {{ formatRating() }}</li>
-            <li> <img :src="`https://image.tmdb.org/t/p/w342/${movie.poster_path}`" alt=""></li>
+            <li> rating: {{ formatRating() }}</li>
         </ul>
     </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.ms_hover {
+    height: 400px;
+    width: 300px;
+
+    .ms_image {
+        height: inherit;
+        width: inherit;
+        background-size: cover;
+        border: 2px solid white;
+
+
+
+    }
+
+    ul {
+        display: none;
+        height: inherit;
+        width: inherit;
+        background-color: black;
+        color: white;
+        border: 2px solid white;
+    }
+
+    &:hover {
+        ul {
+            display: block
+        }
+
+        .ms_image {
+            display: none;
+        }
+    }
+
+}
+</style>

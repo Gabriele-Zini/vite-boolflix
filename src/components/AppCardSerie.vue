@@ -40,10 +40,10 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@use '../style/partials/_mixin.scss' as*;
-@use '../style/partials/variables';
-
 .ms_hover {
+    height: 400px;
+    width: 300px;
+
     .ms_image {
         height: 400px;
         width: 300px;
@@ -65,8 +65,9 @@ export default {
 
     &:hover {
         ul {
-            display:block
+            display: block
         }
+
         .ms_image {
             display: none;
         }
