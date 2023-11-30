@@ -103,10 +103,13 @@ export default {
   <div>
     <div class="container mt-5">
       <h2 class="text-white text-uppercase text-center">movies</h2>
-      <AppSelect :isMovie="true" @select-genre="handleMovieSelect" />
-      <div class="d-flex flex-wrap row">
+      <div class="d-flex justify-content-center mt-5">
+        <AppSelect :isMovie="true" @select-genre="handleMovieSelect" />
+      </div>
+      <div class="d-flex flex-wrap row justify-content-center">
+        <div v-show="store.movieList.length === 0">Movie not found</div>
         <div
-          class="col-12 col-md-6 col-lg-4 col-xxl-3 justify-content-center"
+          class="col-12 col-md-6 col-lg-4 col-xxl-3 justify-content-center d-flex"
           v-for="movie in store.movieList"
           :key="movie.id"
         >
@@ -114,8 +117,11 @@ export default {
         </div>
       </div>
       <h2 class="text-white text-uppercase ms_title text-center">series</h2>
-      <AppSelect :isMovie="false" @select-genre="handleSerieSelect" />
+      <div class="d-flex justify-content-center mt-5">
+        <AppSelect :isMovie="false" @select-genre="handleSerieSelect" />
+      </div>
       <div class="flex-wrap d-flex row justify-content-center">
+        <div v-show="store.seriesList.length === 0">Serie no found</div>
         <div
           class="col-12 col-md-6 col-lg-4 col-xxl-3"
           v-for="movie in store.seriesList"

@@ -19,12 +19,24 @@ export default {
 
 <template>
   <div>
-    <select v-show="isMovie" name="select" id="select-movie" @change="getGenre">
+    <select
+      v-show="isMovie"
+      name="select"
+      id="select-movie"
+      @change="getGenre"
+      class="form-select"
+    >
       <option v-for="genre in store.movieGenres" :value="genre.id">
         {{ genre.name }} {{ genre.id }}
       </option>
     </select>
-    <select v-show="!isMovie" name="select" id="select-sereies" @change="getGenre">
+    <select
+      v-show="!isMovie"
+      name="select"
+      id="select-sereies"
+      @change="getGenre"
+      class="form-select"
+    >
       <option v-for="genre in store.serieGenres" :value="genre.id">
         {{ genre.name }} {{ genre.id }}
       </option>
