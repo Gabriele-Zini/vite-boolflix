@@ -49,9 +49,11 @@ export default {
         api_key: this.store.apiKey,
       }
       this.store.loading = true
-      axios.get(`${this.store.apiUrl}discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=vote_average.desc&without_genres=99,10755&vote_count.gte=200`, { params }).then((resp) => {
+      axios.get(`${this.store.apiUrl}discover/movie?include_adult=false&include_video=false&page=1&sort_by=vote_average.desc&without_genres=99,10755&vote_count.gte=200`, { params }).then((resp) => {
         this.store.movieList = resp.data.results
-
+        this.store.movieList.forEach((movie) => {
+          this.getMovieCredits(movie.id);
+        });
       }).finally(() => {
         this.store.loading = false
       })
@@ -61,9 +63,11 @@ export default {
         api_key: this.store.apiKey,
       }
       this.store.loading = true
-      axios.get(`${this.store.apiUrl}discover/tv?include_adult=false&language=en-US&page=1&sort_by=vote_average.desc&vote_count.gte=200`, { params }).then((resp) => {
+      axios.get(`${this.store.apiUrl}discover/tv?include_adult=false&page=1&sort_by=vote_average.desc&vote_count.gte=200`, { params }).then((resp) => {
         this.store.seriesList = resp.data.results
-
+        this.store.seriesList.forEach((serie) => {
+          this.getSeriesCredits(serie.id);
+        });
       }).finally(() => {
         this.store.loading = false
       })
@@ -75,11 +79,36 @@ export default {
         this.getMovieList()
         this.getSeriesList()
       }
+    },
+    getMovieCredits(movieId) {
+      const creditsParams = {
+        api_key: this.store.apiKey,
+      }
+      axios.get(`${this.store.apiUrl}movie/${movieId}/credits`, { params: creditsParams })
+        .then((resp) => {
+          const movieIndex = this.store.movieList.findIndex(movie => movie.id === movieId);
+          if (movieIndex !== -1) {
+            this.store.movieList[movieIndex].credits = resp.data.cast;
 
+          }
+        })
+    },
+    getSeriesCredits(serieId) {
+      const creditsParams = {
+        api_key: this.store.apiKey,
+      }
+      axios.get(`${this.store.apiUrl}tv/${serieId}/credits`, { params: creditsParams })
+        .then((resp) => {
+          const serieIndex = this.store.seriesList.findIndex(serie => serie.id === serieId);
+          if (serieIndex !== -1) {
+            this.store.seriesList[serieIndex].credits = resp.data.cast;
 
+          }
+        })
     }
   }
 }
+
 </script>
 
 <template>

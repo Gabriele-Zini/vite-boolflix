@@ -41,10 +41,21 @@ export default {
     },
     computed: {
         title() {
-            return this.movie.title? this.movie.title:this.movie.name
+            return this.movie.title ? this.movie.title : this.movie.name
         },
-        originalTitle() {  return this.movie.original_title? this.movie.origina_title:this.movie.original_name},
-     
+        originalTitle() { return this.movie.original_title ? this.movie.origina_title : this.movie.original_name },
+        getCast() {
+            let castNames = "";
+            if (this.movie.credits && this.movie.credits.length > 0) {
+
+                for (let index in this.movie.credits) {
+                    if (index < 5) {
+                        castNames += index < 4 ? this.movie.credits[index].name + ", " : this.movie.credits[index].name + '.'
+                    }
+                }
+                return castNames
+            }
+        }
     }
 }
 
@@ -66,6 +77,8 @@ export default {
             <li> <span class="fw-bold me-2">Rating:</span> <i v-for="star in formatRating()" @click="removeStar()"
                     class="fa-solid fa-star"></i><i v-for="emptyStar in getEmpyStar()" @click="addStar()"
                     class="fa-regular fa-star"></i>
+            <li><span class="fw-bold me-2">Cast: </span> <span>{{ getCast }} </span>
+            </li>
             </li>
         </ul>
     </div>
