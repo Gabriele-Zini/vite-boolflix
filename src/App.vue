@@ -73,7 +73,7 @@ export default {
 
     searchElms() {
       console.log(store.searchQuery)
-      if(this.store.searchQuery !== ''){
+      if(this.store.searchQuery.trim() !== ''){
       this.getMovieList()
       this.getSeriesList()}
 
