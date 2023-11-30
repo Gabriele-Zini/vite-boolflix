@@ -62,8 +62,7 @@ export default {
 .ms_hover {
     height: 400px;
     width: 300px;
-    margin-top: 50px;
-    margin-bottom: 50px;
+    margin: 50px auto;
 
     .ms_image {
         height: 400px;

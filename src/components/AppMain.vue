@@ -21,12 +21,12 @@ export default {
         <div class="container mt-5">
             <h2 class="text-white text-uppercase text-center">movies</h2>
             <div class="d-flex flex-wrap row">
-                <div class="  col-12 col-md-6 col-lg-4 col-xxl-3 " v-for="movie in store.movieList" :key="movie.id">
+                <div class="  col-12 col-md-6 col-lg-4 col-xxl-3 justify-content-center " v-for="movie in store.movieList" :key="movie.id">
                     <AppCardMovie :movie="movie" />
                 </div>
             </div>
             <h2 class="text-white text-uppercase ms_title text-center">series</h2>
-            <div class="flex-wrap d-flex row">
+            <div class="flex-wrap d-flex row justify-content-center">
                 <div class=" col-12 col-md-6 col-lg-4 col-xxl-3" v-for="serie in store.seriesList" :key="serie.id">
                     <AppCardSerie :serie="serie" />
                 </div>
