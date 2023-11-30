@@ -39,6 +39,13 @@ export default {
             }
         }
     },
+    computed: {
+        title() {
+            return this.movie.title? this.movie.title:this.movie.name
+        },
+        originalTitle() {  return this.movie.original_title? this.movie.origina_title:this.movie.original_name},
+     
+    }
 }
 
 </script>
@@ -49,8 +56,8 @@ export default {
             :style="{ backgroundImage: `url('https://image.tmdb.org/t/p/w342/${movie.poster_path}')` }">
         </div>
         <ul class="list-unstyled overflow-y-auto py-5 px-4" :class="{ 'd-block': !movie.poster_path }">
-            <li><span class="fw-bold me-2"> Title:</span> {{ movie.title }}</li>
-            <li v-if="movie.original_title !== movie.title"><span class="fw-bold me-2">Original title:</span>{{
+            <li><span class="fw-bold me-2"> Title:</span> {{ title }}</li>
+            <li v-if="originalTitle !== title"><span class="fw-bold me-2">Original title:</span>{{
                 movie.original_title }}</li>
             <li v-if="getImage()"> <span class="fw-bold me-2">Original language:</span> <img :src="getImage()">
             </li>

@@ -76,6 +76,7 @@ export default {
       if(this.store.searchQuery.trim() !== ''){
       this.getMovieList()
       this.getSeriesList()}
+      
 
     }
   }
