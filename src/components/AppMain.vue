@@ -2,12 +2,11 @@
 import { store } from "../store";
 import AppCard from "./AppCard.vue";
 import AppSelect from "./AppSelect.vue";
+import axios from "axios";
 export default {
   data() {
     return {
       store,
-      localMovieList: [...store.movieList],
-      localSeriesList: [...store.serieGenres],
     };
   },
   components: {
@@ -16,25 +15,85 @@ export default {
   },
   methods: {
     handleMovieSelect(selectedGenreId) {
-      selectedGenreId = parseInt(selectedGenreId.target.value);
-      console.log(typeof selectedGenreId, selectedGenreId);
-      console.log(this.store.movieList);
-      this.store.movieList = this.store.movieList.filter((movie) => {
-        const isIncluded = movie.genre_ids.includes(selectedGenreId);
-        console.log(isIncluded); // Aggiunto console.log per debug
-        return isIncluded;
-      });
+      const params = {
+        api_key: this.store.apiKey,
+      };
+      this.store.loading = true;
+      axios
+        .get(
+          `${this.store.apiUrl}discover/movie?include_adult=false&include_video=false&page=1&sort_by=vote_average.desc&without_genres=99,10755&vote_count.gte=200`,
+          { params }
+        )
+        .then((resp) => {
+          this.store.movieList = resp.data.results;
+          this.store.movieList.forEach((movie) => {
+            this.getMovieCredits(movie.id);
+          });
+        })
+        .finally(() => {
+          console.log(this.localMovieList);
+          selectedGenreId = parseInt(selectedGenreId.target.value);
+          this.store.movieList = this.store.movieList.filter((movie) => {
+            const isIncluded = movie.genre_ids.includes(selectedGenreId);
+            return isIncluded;
+          });
+        });
       console.log(this.store.movieList);
     },
     handleSerieSelect(selectedGenreId) {
-      selectedGenreId = parseInt(selectedGenreId.target.value);
-      console.log(typeof selectedGenreId, selectedGenreId);
-      this.store.seriesList = this.store.seriesList.filter((serie) => {
-        const isIncluded = serie.genre_ids.includes(selectedGenreId);
-        console.log(isIncluded); // Aggiunto console.log per debug
-        return isIncluded;
-      });
-      console.log(this.store.seriesList);
+      const params = {
+        api_key: this.store.apiKey,
+      };
+      this.store.loading = true;
+      axios
+        .get(
+          `${this.store.apiUrl}discover/tv?include_adult=false&page=1&sort_by=vote_average.desc&vote_count.gte=200`,
+          { params }
+        )
+        .then((resp) => {
+          this.store.seriesList = resp.data.results;
+          this.store.seriesList.forEach((serie) => {
+            this.getSeriesCredits(serie.id);
+          });
+        })
+        .finally(() => {
+          selectedGenreId = parseInt(selectedGenreId.target.value);
+          this.store.seriesList = this.store.seriesList.filter((serie) => {
+            const isIncluded = serie.genre_ids.includes(selectedGenreId);
+            return isIncluded;
+          });
+        });
+    },
+
+    getMovieCredits(movieId) {
+      const creditsParams = {
+        api_key: this.store.apiKey,
+      };
+      axios
+        .get(`${this.store.apiUrl}movie/${movieId}/credits`, { params: creditsParams })
+        .then((resp) => {
+          const movieIndex = this.store.movieList.findIndex(
+            (movie) => movie.id === movieId
+          );
+          if (movieIndex !== -1) {
+            this.store.movieList[movieIndex].credits = resp.data.cast;
+          }
+        });
+    },
+    getSeriesCredits(serieId) {
+      const creditsParams = {
+        api_key: this.store.apiKey,
+      };
+      axios
+        .get(`${this.store.apiUrl}tv/${serieId}/credits`, { params: creditsParams })
+        .then((resp) => {
+          const serieIndex = this.store.seriesList.findIndex(
+            (serie) => serie.id === serieId
+          );
+          if (serieIndex !== -1) {
+            this.store.seriesList[serieIndex].credits = resp.data.cast;
+          }
+        });
     },
   },
 };

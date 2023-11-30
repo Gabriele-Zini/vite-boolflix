@@ -93,7 +93,6 @@ export default {
     },
 
     searchElms() {
-      console.log(store.searchQuery);
       if (this.store.searchQuery.trim() !== "") {
         this.getMovieList();
         this.getSeriesList();
@@ -136,7 +135,6 @@ export default {
       axios
         .get(`${this.store.apiUrl}genre/movie/list`, { params: params })
         .then((resp) => {
-          console.log(resp.data.genres);
           this.store.movieGenres = resp.data.genres;
         });
     },
@@ -145,7 +143,6 @@ export default {
         api_key: this.store.apiKey,
       };
       axios.get(`${this.store.apiUrl}genre/tv/list`, { params: params }).then((resp) => {
-        console.log(resp.data.genres);
         this.store.serieGenres = resp.data.genres;
       });
     },
