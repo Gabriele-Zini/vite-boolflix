@@ -47,10 +47,9 @@ export default {
     firstPageMovie() {
       const params = {
         api_key: this.store.apiKey,
-        query: "o"
       }
       this.store.loading = true
-      axios.get(`${this.store.apiUrl}search/movie`, { params }).then((resp) => {
+      axios.get(`${this.store.apiUrl}discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=vote_average.desc&without_genres=99,10755&vote_count.gte=200`, { params }).then((resp) => {
         this.store.movieList = resp.data.results
 
       }).finally(() => {
@@ -60,10 +59,9 @@ export default {
     firstPageSerie() {
       const params = {
         api_key: this.store.apiKey,
-        query: "o"
       }
       this.store.loading = true
-      axios.get(`${this.store.apiUrl}search/tv`, { params }).then((resp) => {
+      axios.get(`${this.store.apiUrl}discover/tv?include_adult=false&language=en-US&page=1&sort_by=vote_average.desc&vote_count.gte=200`, { params }).then((resp) => {
         this.store.seriesList = resp.data.results
 
       }).finally(() => {
@@ -73,10 +71,11 @@ export default {
 
     searchElms() {
       console.log(store.searchQuery)
-      if(this.store.searchQuery.trim() !== ''){
-      this.getMovieList()
-      this.getSeriesList()}
-      
+      if (this.store.searchQuery.trim() !== '') {
+        this.getMovieList()
+        this.getSeriesList()
+      }
+
 
     }
   }
