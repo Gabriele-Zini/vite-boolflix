@@ -81,7 +81,8 @@ export default {
     .ms_image {
         height: inherit;
         width: inherit;
-        background-size: contain;
+        background-size: cover;
+        background-position: center;
         border: 2px solid transparent;
 
 
