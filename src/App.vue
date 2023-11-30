@@ -15,8 +15,8 @@ export default {
     }
   },
   created() {
-    this.getMovieList()
-    this.getSeriesList()
+    this.firstPageMovie()
+    this.firstPageSerie()
   },
   methods: {
     getMovieList() {
@@ -39,16 +39,43 @@ export default {
       this.store.loading = true
       axios.get(`${this.store.apiUrl}search/tv`, { params }).then((resp) => {
         this.store.seriesList = resp.data.results
-       
+
       }).finally(() => {
         this.store.loading = false
       })
     },
+    firstPageMovie() {
+      const params = {
+        api_key: this.store.apiKey,
+        query: "o"
+      }
+      this.store.loading = true
+      axios.get(`${this.store.apiUrl}search/movie`, { params }).then((resp) => {
+        this.store.movieList = resp.data.results
+
+      }).finally(() => {
+        this.store.loading = false
+      })
+    },
+    firstPageSerie() {
+      const params = {
+        api_key: this.store.apiKey,
+        query: "o"
+      }
+      this.store.loading = true
+      axios.get(`${this.store.apiUrl}search/tv`, { params }).then((resp) => {
+        this.store.seriesList = resp.data.results
+
+      }).finally(() => {
+        this.store.loading = false
+      })
+    },
+
     searchElms() {
       console.log(store.searchQuery)
       this.getMovieList()
       this.getSeriesList()
-      
+
     }
   }
 }
@@ -61,4 +88,5 @@ export default {
 
 <style lang="scss">
 @use './style/general.scss';
+@use "@fortawesome/fontawesome-free/css/all.css";
 </style>
