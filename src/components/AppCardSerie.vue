@@ -30,7 +30,7 @@ export default {
             }
         },
         addStar() {
-            if (this.serie.vote_average < 8) {
+            if (this.serie.vote_average < 10) {
                 this.serie.vote_average += 1
             }
         }

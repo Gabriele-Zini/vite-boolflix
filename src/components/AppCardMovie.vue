@@ -34,7 +34,7 @@ export default {
             }
         },
         addStar() {
-            if (this.movie.vote_average < 8) {
+            if (this.movie.vote_average < 10) {
                 this.movie.vote_average += 1
             }
         }
