@@ -29,10 +29,11 @@ export default {
 </script>
 
 <template>
-  <div class="d-flex gap-4">
+  <div class="d-flex gap-4 align-items-center">
     <!-- movie select -->
-    <button class="btn btn-danger" @click="handleClick">search</button>
-    <h4 v-show="isMovie" class="text-uppercase text-danger d-none d-md-block">genres</h4>
+    <h4 v-show="isMovie" class="text-uppercase text-danger d-none d-md-block ms_title">
+      filter by genres
+    </h4>
     <select
       v-show="isMovie"
       name="select"
@@ -44,6 +45,7 @@ export default {
         {{ genre.name }}
       </option>
     </select>
+
     <h4 v-if="isMovie" class="text-uppercase text-danger d-none d-md-block">category</h4>
     <select
       name="select"
@@ -58,6 +60,9 @@ export default {
       <option value="top_rated">Top Rated</option>
       <option value="upcoming">Upcoming</option>
     </select>
+    <button v-if="isMovie" class="btn btn-danger ms_button" @click="handleClick">
+      get category
+    </button>
 
     <!-- series select -->
     <select
@@ -87,7 +92,18 @@ export default {
       <option value="top_rated">Top Rated</option>
       <option value="on_the_air">On the air</option>
     </select>
+    <button v-if="!isMovie" class="btn btn-danger ms_button" @click="handleClick">
+      get category
+    </button>
   </div>
 </template>
 
-<style></style>
+<style scoped lang="scss">
+.ms_button {
+  min-width: 150px;
+}
+
+.ms_title {
+  min-width: 200px;
+}
+</style>

@@ -127,11 +127,6 @@ export default {
       console.log(this.store.typeSerieSearch);
       return this.store.typeSerieSearch;
     },
-
-    handleClickParent() {
-      this.handleMovieSelect();
-      //da implementare
-    },
   },
 };
 </script>
@@ -146,7 +141,7 @@ export default {
           :isMovie="true"
           @select-genre="handleMovieSelect"
           @get-type-movie-list="handleTypeMovieList"
-          @handle-click="handleClickParent()"
+          @handle-click="handleMovieSelect"
         />
       </div>
       <div
@@ -173,6 +168,7 @@ export default {
           :isMovie="false"
           @select-genre="handleSerieSelect"
           @get-type-serie-list="handleTypeSerieList"
+          @handle-click="handleSerieSelect"
         />
       </div>
       <div
