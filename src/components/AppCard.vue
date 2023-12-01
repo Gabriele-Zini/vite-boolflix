@@ -89,6 +89,7 @@ export default {
     height: 400px;
     width: 300px;
     margin: 50px auto;
+    box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.200);
 
 
     .ms_image {

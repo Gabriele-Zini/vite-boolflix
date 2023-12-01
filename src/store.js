@@ -11,6 +11,8 @@ export const store = reactive({
   searchMovieGenres: 0,
   serieGenres: [],
   searchSerieGenres: 0,
+  typeMovieSearch:"",
+  typeSerieSearch:"",
   flags: [
     "en",
     "es",
