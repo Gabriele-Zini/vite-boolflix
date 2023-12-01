@@ -2,7 +2,6 @@
 import { store } from "../store";
 import AppCard from "./AppCard.vue";
 import AppSelect from "./AppSelect.vue";
-import axios from "axios";
 export default {
   data() {
     return {
@@ -14,172 +13,21 @@ export default {
     AppSelect,
   },
   methods: {
-    /* handleSelect Movies */
-    handleMovieSelect(selectedGenreId) {
-      const params = {
-        api_key: this.store.apiKey,
-      };
-      this.store.loading = true;
-      let url = ``;
-      if (this.store.typeMovieSearch === "top_rated") {
-        url = `${this.store.apiUrl}movie/top_rated`;
-      } else if (this.store.typeMovieSearch === "popular") {
-        url = `${this.store.apiUrl}movie/popular?&page=1`;
-      } else if (this.store.typeMovieSearch === "upcoming") {
-        url = `${this.store.apiUrl}movie/upcoming`;
-      } else if (this.store.typeMovieSearch === "now_playing") {
-        url = `${this.store.apiUrl}movie/now_playing?&page=2`;
-      } else {
-        url = `${this.store.apiUrl}movie/popular?page=2`;
-      }
-      axios
-        .get(url, { params })
-        .then((resp) => {
-          this.store.movieList = resp.data.results;
-          this.store.movieList.forEach((movie) => {
-            this.getMovieCredits(movie.id);
-          });
-        })
-        .catch((error) => {
-          console.error("Error fetching movies:", error);
-        })
-        .finally(() => {
-          selectedGenreId = parseInt(selectedGenreId.target.value);
-          this.store.movieList = this.store.movieList.filter((movie) => {
-            const isIncluded = movie.genre_ids.includes(selectedGenreId);
-            return isIncluded;
-          });
-        });
-      console.log(this.store.movieList);
+    handleMovieSelect() {
+      console.log(this.store.backupMovieArray);
+      this.store.movieList = [...this.store.backupMovieArray];
+      this.store.movieList = this.store.movieList.filter((movie) => {
+        const isIncluded = movie.genre_ids.includes(this.store.searchMovieGenres);
+        return isIncluded;
+      });
     },
 
-    /* handleSelect Series */
-    handleSerieSelect(selectedGenreId) {
-      const params = {
-        api_key: this.store.apiKey,
-      };
-      this.store.loading = true;
-      let url = ``;
-      if (this.store.typeSerieSearch === "airing_today") {
-        url = `${this.store.apiUrl}tv/airing_today?page=10`;
-      } else if (this.store.typeSerieSearch === "on_the_air") {
-        url = `${this.store.apiUrl}tv/on_the_air`;
-      } else if (this.store.typeSerieSearch === "popular") {
-        url = `${this.store.apiUrl}tv/popular`;
-      } else if (this.store.typeSerieSearch === "top_rated") {
-        url = `${this.store.apiUrl}tv/top_rated`;
-      } else {
-        url = `${this.store.apiUrl}tv/airing_today`;
-      }
-
-      axios
-        .get(url, { params })
-        .then((resp) => {
-          this.store.seriesList = resp.data.results;
-          this.store.seriesList.forEach((serie) => {
-            this.getSeriesCredits(serie.id);
-          });
-        })
-        .finally(() => {
-          selectedGenreId = parseInt(selectedGenreId.target.value);
-          this.store.seriesList = this.store.seriesList.filter((serie) => {
-            const isIncluded = serie.genre_ids.includes(selectedGenreId);
-            return isIncluded;
-          });
-        });
-    },
-
-    getMovieCredits(movieId) {
-      const creditsParams = {
-        api_key: this.store.apiKey,
-      };
-      axios
-        .get(`${this.store.apiUrl}movie/${movieId}/credits`, { params: creditsParams })
-        .then((resp) => {
-          const movieIndex = this.store.movieList.findIndex(
-            (movie) => movie.id === movieId
-          );
-          if (movieIndex !== -1) {
-            this.store.movieList[movieIndex].credits = resp.data.cast;
-          }
-        });
-    },
-    getSeriesCredits(serieId) {
-      const creditsParams = {
-        api_key: this.store.apiKey,
-      };
-      axios
-        .get(`${this.store.apiUrl}tv/${serieId}/credits`, { params: creditsParams })
-        .then((resp) => {
-          const serieIndex = this.store.seriesList.findIndex(
-            (serie) => serie.id === serieId
-          );
-          if (serieIndex !== -1) {
-            this.store.seriesList[serieIndex].credits = resp.data.cast;
-          }
-        });
-    },
-    handleTypeMovieList() {
-      console.log(this.store.typeMovieSearch);
-      return this.store.typeMovieSearch;
-    },
-    handleTypeSerieList() {
-      console.log(this.store.typeSerieSearch);
-      return this.store.typeSerieSearch;
-    },
-
-    handleClickMovie() {
-      const params = {
-        api_key: this.store.apiKey,
-      };
-      this.store.loading = true;
-      let url = ``;
-      if (this.store.typeMovieSearch === "top_rated") {
-        url = `${this.store.apiUrl}movie/top_rated`;
-      } else if (this.store.typeMovieSearch === "popular") {
-        url = `${this.store.apiUrl}movie/popular?&page=1`;
-      } else if (this.store.typeMovieSearch === "upcoming") {
-        url = `${this.store.apiUrl}movie/upcoming`;
-      } else if (this.store.typeMovieSearch === "now_playing") {
-        url = `${this.store.apiUrl}movie/now_playing?&page=2`;
-      } else {
-        url = `${this.store.apiUrl}movie/popular?page=2`;
-      }
-      axios
-        .get(url, { params })
-        .then((resp) => {
-          this.store.movieList = resp.data.results;
-          this.store.movieList.forEach((movie) => {
-            this.getMovieCredits(movie.id);
-          });
-        })
-        .catch((error) => {
-          console.error("Error fetching movies:", error);
-        });
-    },
-    handleClickSerie() {
-      const params = {
-        api_key: this.store.apiKey,
-      };
-      this.store.loading = true;
-      let url = ``;
-      if (this.store.typeSerieSearch === "airing_today") {
-        url = `${this.store.apiUrl}tv/airing_today?page=10`;
-      } else if (this.store.typeSerieSearch === "on_the_air") {
-        url = `${this.store.apiUrl}tv/on_the_air`;
-      } else if (this.store.typeSerieSearch === "popular") {
-        url = `${this.store.apiUrl}tv/popular`;
-      } else if (this.store.typeSerieSearch === "top_rated") {
-        url = `${this.store.apiUrl}tv/top_rated`;
-      } else {
-        url = `${this.store.apiUrl}tv/airing_today`;
-      }
-
-      axios.get(url, { params }).then((resp) => {
-        this.store.seriesList = resp.data.results;
-        this.store.seriesList.forEach((serie) => {
-          this.getSeriesCredits(serie.id);
-        });
+    handleSerieSelect() {
+      console.log(this.store.backupSerieArray);
+      this.store.seriesList = [...this.store.backupSerieArray];
+      this.store.seriesList = this.store.seriesList.filter((movie) => {
+        const isIncluded = movie.genre_ids.includes(this.store.searchSerieGenres);
+        return isIncluded;
       });
     },
   },
@@ -192,12 +40,7 @@ export default {
       <!-- movies -->
       <h2 class="text-white text-uppercase text-center">movies</h2>
       <div class="d-flex justify-content-center mt-5">
-        <AppSelect
-          :isMovie="true"
-          @select-genre="handleMovieSelect"
-          @get-type-movie-list="handleTypeMovieList"
-          @handle-click="handleClickMovie"
-        />
+        <AppSelect :isMovie="true" @select-genre="handleMovieSelect" />
       </div>
       <div
         v-if="store.movieList.length === 0"
@@ -219,12 +62,7 @@ export default {
       <!-- series -->
       <h2 class="text-white text-uppercase ms_title text-center">series</h2>
       <div class="d-flex justify-content-center mt-5">
-        <AppSelect
-          :isMovie="false"
-          @select-genre="handleSerieSelect"
-          @get-type-serie-list="handleTypeSerieList"
-          @handle-click="handleClickSerie"
-        />
+        <AppSelect :isMovie="false" @select-genre="handleSerieSelect" />
       </div>
       <div
         v-if="store.seriesList.length === 0"

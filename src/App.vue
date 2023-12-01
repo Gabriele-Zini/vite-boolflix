@@ -31,6 +31,7 @@ export default {
         .get(`${this.store.apiUrl}search/movie`, { params })
         .then((resp) => {
           this.store.movieList = resp.data.results;
+          this.store.backupMovieArray = resp.data.results;
         })
         .finally(() => {
           this.store.loading = false;
@@ -46,6 +47,7 @@ export default {
         .get(`${this.store.apiUrl}search/tv`, { params })
         .then((resp) => {
           this.store.seriesList = resp.data.results;
+          this.store.backupSerieArray = resp.data.results;
         })
         .finally(() => {
           this.store.loading = false;
@@ -63,6 +65,7 @@ export default {
         )
         .then((resp) => {
           this.store.movieList = resp.data.results;
+          this.store.backupMovieArray = resp.data.results;
           this.store.movieList.forEach((movie) => {
             this.getMovieCredits(movie.id);
           });
@@ -83,6 +86,7 @@ export default {
         )
         .then((resp) => {
           this.store.seriesList = resp.data.results;
+          this.store.backupSerieArray = resp.data.results;
           this.store.seriesList.forEach((serie) => {
             this.getSeriesCredits(serie.id);
           });
