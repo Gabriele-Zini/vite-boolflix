@@ -127,6 +127,61 @@ export default {
       console.log(this.store.typeSerieSearch);
       return this.store.typeSerieSearch;
     },
+
+    handleClickMovie() {
+      const params = {
+        api_key: this.store.apiKey,
+      };
+      this.store.loading = true;
+      let url = ``;
+      if (this.store.typeMovieSearch === "top_rated") {
+        url = `${this.store.apiUrl}movie/top_rated`;
+      } else if (this.store.typeMovieSearch === "popular") {
+        url = `${this.store.apiUrl}movie/popular?&page=1`;
+      } else if (this.store.typeMovieSearch === "upcoming") {
+        url = `${this.store.apiUrl}movie/upcoming`;
+      } else if (this.store.typeMovieSearch === "now_playing") {
+        url = `${this.store.apiUrl}movie/now_playing?&page=2`;
+      } else {
+        url = `${this.store.apiUrl}movie/popular?page=2`;
+      }
+      axios
+        .get(url, { params })
+        .then((resp) => {
+          this.store.movieList = resp.data.results;
+          this.store.movieList.forEach((movie) => {
+            this.getMovieCredits(movie.id);
+          });
+        })
+        .catch((error) => {
+          console.error("Error fetching movies:", error);
+        });
+    },
+    handleClickSerie() {
+      const params = {
+        api_key: this.store.apiKey,
+      };
+      this.store.loading = true;
+      let url = ``;
+      if (this.store.typeSerieSearch === "airing_today") {
+        url = `${this.store.apiUrl}tv/airing_today?page=10`;
+      } else if (this.store.typeSerieSearch === "on_the_air") {
+        url = `${this.store.apiUrl}tv/on_the_air`;
+      } else if (this.store.typeSerieSearch === "popular") {
+        url = `${this.store.apiUrl}tv/popular`;
+      } else if (this.store.typeSerieSearch === "top_rated") {
+        url = `${this.store.apiUrl}tv/top_rated`;
+      } else {
+        url = `${this.store.apiUrl}tv/airing_today`;
+      }
+
+      axios.get(url, { params }).then((resp) => {
+        this.store.seriesList = resp.data.results;
+        this.store.seriesList.forEach((serie) => {
+          this.getSeriesCredits(serie.id);
+        });
+      });
+    },
   },
 };
 </script>
@@ -141,7 +196,7 @@ export default {
           :isMovie="true"
           @select-genre="handleMovieSelect"
           @get-type-movie-list="handleTypeMovieList"
-          @handle-click="handleMovieSelect"
+          @handle-click="handleClickMovie"
         />
       </div>
       <div
@@ -168,7 +223,7 @@ export default {
           :isMovie="false"
           @select-genre="handleSerieSelect"
           @get-type-serie-list="handleTypeSerieList"
-          @handle-click="handleSerieSelect"
+          @handle-click="handleClickSerie"
         />
       </div>
       <div
