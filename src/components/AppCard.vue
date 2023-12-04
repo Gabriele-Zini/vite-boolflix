@@ -5,6 +5,7 @@ export default {
     data() {
         return {
             store,
+            castNames: "",
 
         }
     },
@@ -45,7 +46,7 @@ export default {
         },
         originalTitle() { return this.movie.original_title ? this.movie.origina_title : this.movie.original_name },
         getCast() {
-            let castNames = "";
+            let castNames = ""
             if (this.movie.credits && this.movie.credits.length > 0) {
 
                 for (let index in this.movie.credits) {
@@ -77,7 +78,7 @@ export default {
             <li> <span class="fw-bold me-2">Rating:</span> <i v-for="star in formatRating()" @click="removeStar()"
                     class="fa-solid fa-star"></i><i v-for="emptyStar in getEmpyStar()" @click="addStar()"
                     class="fa-regular fa-star"></i>
-            <li><span class="fw-bold me-2">Cast: </span> <span>{{ getCast }} </span>
+            <li v-if="getCast"><span class="fw-bold me-2">Cast: </span> <span>{{ getCast }} </span>
             </li>
             </li>
         </ul>
