@@ -46,19 +46,29 @@ export default {
         },
         originalTitle() { return this.movie.original_title ? this.movie.origina_title : this.movie.original_name },
         getCast() {
-            let castNames = ""
-            if (this.movie.credits && this.movie.credits.length > 0) {
+            let castNames = "";
 
-                for (let index in this.movie.credits) {
-                    if (index < 5) {
-                        castNames += index < 4 ? this.movie.credits[index].name + ", " : this.movie.credits[index].name + '.'
+            if (this.movie.credits && this.movie.credits.length > 0) {
+                const maxDisplayCount = 5;
+
+                for (let index = 0; index < Math.min(this.movie.credits.length, maxDisplayCount); index++) {
+                    castNames += this.movie.credits[index].name;
+
+                    if (index < maxDisplayCount - 1 && index < this.movie.credits.length - 1) {
+                        castNames += ", ";
+                    } else {
+                        castNames += ".";
                     }
                 }
-                return castNames
+
+                return castNames;
+            } else {
+                return "Nessun dato sugli attori disponibile.";
             }
         }
     }
 }
+
 
 </script>
 
@@ -78,7 +88,7 @@ export default {
             <li> <span class="fw-bold me-2">Rating:</span> <i v-for="star in formatRating()" @click="removeStar()"
                     class="fa-solid fa-star"></i><i v-for="emptyStar in getEmpyStar()" @click="addStar()"
                     class="fa-regular fa-star"></i>
-            <li v-if="getCast"><span class="fw-bold me-2">Cast: </span> <span>{{ getCast }} </span>
+            <li><span class="fw-bold me-2">Cast: </span> <span>{{ getCast }} </span>
             </li>
             </li>
         </ul>
