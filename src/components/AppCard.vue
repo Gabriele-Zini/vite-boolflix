@@ -63,7 +63,7 @@ export default {
 
                 return castNames;
             } else {
-                return "Nessun dato sugli attori disponibile.";
+                return "No cast data available";
             }
         }
     }
